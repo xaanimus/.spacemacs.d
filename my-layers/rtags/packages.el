@@ -31,6 +31,7 @@
 
 (defconst rtags-packages
   '(helm
+    company-rtags
     (rtags :toggle (configuration-layer/package-usedp 'company))
     copmany))
 
@@ -38,6 +39,10 @@
     (use-package helm
       :if helm-enabled))
 
+(defun rtags/init-company-rtags ()
+  (use-package company-rtags
+    :defer t
+    :init))
 
 (defun rtags/init-rtags ()
   (use-package rtags

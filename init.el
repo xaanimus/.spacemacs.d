@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     asm
      php
      rust
      sql
@@ -43,7 +44,7 @@ values."
      html
      ess
 
-                                        ;     js-flow
+     ;;js-flow
      javascript
      typescript
 
@@ -60,15 +61,18 @@ values."
      emacs-lisp
      git
      markdown
-     org
+     ;;org
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-                                        ;spell-checking
+     react
+     ;;spell-checking
      syntax-checking
-                                        ;(c-c++ :variables
-                                        ;       c-c++-enable-clang-support t)
-     c-c++
+     ;;(c-c++ :variables
+     ;;       c-c++-enable-clang-support t)
+     (c-c++ :variables
+            ;;c-c++-enable-clang-support t
+            c-c++-default-mode-for-headers 'c++-mode)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -316,8 +320,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
     '(progn
        (global-set-key (kbd "C-SPC") 'company-complete)))
   (setq-default omnisharp-server-executable-path
-                "/Users/serge-olivieramega/code/cloned_projects/omnisharp-server/OmniSharp/bin/Debug/OmniSharp.exe"
-                omnisharp--curl-executable-path "/usr/local/bin/curl")
+                "/Users/serge-olivieramega/code/cloned/omnisharp-server/OmniSharp/bin/Debug/OmniSharp.exe"
+                omnisharp--curl-executable-path "/usr/bin/curl")
   (setq c-default-style "linux"
         c-basic-offset 4)
   )
@@ -329,62 +333,7 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-
-
-  (setq-default
-   evil-escape-excluded-states '(visual normal transient)
-   evil-escape-key-sequence "jj"
-   evil-escape-delay 0.3
-   spacemacs-show-trailing-whitespace nil
-   )
-
-  (global-set-key (kbd "<s-right>") 'end-of-line)
-  (global-set-key (kbd "<s-left>") 'beginning-of-line)
-
-  (spacemacs/set-leader-keys "tt" 'myfunc/toggle-tab-mode)
-
-  (add-hook 'python-mode-hook
-            '(lambda ()
-               (python-indent-guess-indent-offset)
-               (dtrt-indent-mode)
-               (dtrt-indent-adapt)) t)
-
-  (myfunc/set-gui)
-  )
-
-(defun myfunc/toggle-tab-mode ()
-  (interactive)
-  (if indent-tabs-mode
-      (setq indent-tabs-mode nil)
-    (setq indent-tabs-mode t)))
-
-(defun myfunc/set-gui ()
-  ;;Transparent
-  (set-frame-parameter (selected-frame) 'alpha '(90 90))
-  (add-to-list 'default-frame-alist '(alpha 90 90))
-
-  (setq powerline-default-separator 'arrow
-        ns-use-srgb-colorspace nil)
-  (global-linum-mode)
-  (global-hl-line-mode -1)
-
-  ;;Theme stuff
-  (setq bgnd "#0a0a19")
-  (set-face-attribute 'default nil
-                      :foreground "#eebbee"
-                      :background bgnd)
-  (set-face-attribute 'fringe nil
-                      :background bgnd)
-  (set-face-attribute 'linum nil
-                      :background bgnd)
-  (add-to-list '(default nil
-                  :foreground "#eebbee"
-                  :background bgnd))
-  (add-to-list '(fringe nil
-                        :background bgnd))
-  (add-to-list '(linum nil
-                       :background bgnd))
-
+  (load "~/.spacemacs.d/config.el")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -397,10 +346,10 @@ you should place your code here."
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (ess-smart-equals ess-R-object-popup ess-R-data-view phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode company-sourcekit tide typescript-mode flycheck-flow company-flow toml-mode racer flycheck-rust seq cargo rust-mode sql-indent go-guru go-eldoc company-go go-mode lua-mode glsl-mode yaml-mode dtrt-indent realgud test-simple loc-changes load-relative wolfram-mode thrift stan-mode scad-mode qml-mode matlab-mode julia-mode arduino-mode rtags helm-cscope xcscope omnisharp csharp-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby utop tuareg caml ocp-indent merlin swift-mode atom-one-dark-theme xterm-color smeargle shell-pop orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download multi-term mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help disaster company-c-headers cmake-mode clang-format auto-dictionary yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic key-chord helm-company helm-c-yasnippet company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
+    (x86-lookup nasm-mode shut-up ghub sourcekit ctable julia-repl llvm-mode company-rtags winum fuzzy ess-smart-equals ess-R-object-popup ess-R-data-view phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode company-sourcekit tide typescript-mode flycheck-flow company-flow toml-mode racer flycheck-rust seq cargo rust-mode sql-indent go-guru go-eldoc company-go go-mode lua-mode glsl-mode yaml-mode dtrt-indent realgud test-simple loc-changes load-relative wolfram-mode thrift stan-mode scad-mode qml-mode matlab-mode julia-mode arduino-mode rtags helm-cscope xcscope omnisharp csharp-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby utop tuareg caml ocp-indent merlin swift-mode atom-one-dark-theme xterm-color smeargle shell-pop orgit org-projectile org-present org org-pomodoro alert log4e gntp org-download multi-term mmm-mode markdown-toc markdown-mode magit-gitflow htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit magit-popup git-commit with-editor eshell-z eshell-prompt-extras esh-help disaster company-c-headers cmake-mode clang-format auto-dictionary yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic key-chord helm-company helm-c-yasnippet company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint info+ indent-guide ido-vertical-mode hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async quelpa package-build spacemacs-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:foreground "#ABB2BF" :background "#282C34")))))

@@ -1,0 +1,3 @@
+[submodule "my-layers/julia-ess-lsp/lsp-julia"]
+	path = my-layers/julia-ess-lsp/lsp-julia
+	url = https://github.com/MartinWolke/lsp-julia.git
